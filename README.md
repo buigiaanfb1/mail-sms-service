@@ -1,4 +1,4 @@
-# Mail service - helps another apps send email with API by passing parameters.
+# Mail - SMS service - helps another apps send email with API by passing parameters.
 
 ### This project is in develop now
 
@@ -21,4 +21,10 @@
 ```html
 { "to": "anbui.dev@gmail.com", "subject": "Test email", "text": "This is a test
 email" }
+```
+
+**\_/send-sms**
+
+```html
+{ "to": "+840948451791", "body": "Test email"}
 ```
