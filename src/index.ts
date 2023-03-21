@@ -36,7 +36,7 @@ app.post(
     };
     try {
       await transporter.sendMail(mailOptions);
-      res.send("Email sent successfully");
+      res.send("Email sent successfully ");
     } catch (error) {
       res.status(500).send(error);
     }
