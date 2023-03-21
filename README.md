@@ -16,14 +16,14 @@
 
 **APIs:**
 
-**_/send-email_**
+**_/mail/send-email_**
 
 ```html
 { "to": "anbui.dev@gmail.com", "subject": "Test email", "text": "This is a test
 email" }
 ```
 
-**\_/send-sms**
+**_/sms/send-sms**
 
 ```html
 { "to": "+840948451791", "body": "Test email"}
