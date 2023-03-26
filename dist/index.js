@@ -55,19 +55,19 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
         secure: true,
         service: "Gmail",
         auth: {
-            user: "buigiaanfb1@gmail.com",
-            pass: "guhlotrnwbxmdlrs",
+            user: process.env.USER_MAIL,
+            pass: process.env.USER_PASS,
         },
     });
     const mailOptions = {
-        from: "buigiaanfb1@gmail.com",
+        from: process.env.USER_MAIL,
         to,
         subject,
         text,
     };
     try {
         yield transporter.sendMail(mailOptions);
-        res.send("Email sent successfully ");
+        res.status(200).send("Email sent successfully");
     }
     catch (error) {
         res.status(500).send(error);
@@ -79,7 +79,7 @@ app.post("/sms/send-sms", (req, res) => __awaiter(void 0, void 0, void 0, functi
         .create({
         body: body,
         to: to,
-        from: "+15177900837",
+        from: process.env.TWILIO_PHONE_NUMBER,
     })
         .then((message) => {
         res.status(200).send(`SMS message sent to ${message.to}`);
@@ -88,7 +88,7 @@ app.post("/sms/send-sms", (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(500).send(error);
     });
 }));
-app.listen(3000, () => {
-    console.log("Server started on port 3000");
+app.listen(3001, () => {
+    console.log("Server started on port 3001");
 });
 //# sourceMappingURL=index.js.map
