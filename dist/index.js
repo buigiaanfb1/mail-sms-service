@@ -40,6 +40,9 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const twilio_1 = __importDefault(require("twilio"));
 const dotenv = __importStar(require("dotenv"));
+const fs_1 = require("fs");
+const mustache_1 = __importDefault(require("mustache"));
+const path_1 = __importDefault(require("path"));
 dotenv.config();
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.urlencoded({ extended: true }));
@@ -59,13 +62,24 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
             pass: process.env.USER_PASS,
         },
     });
-    const mailOptions = {
-        from: process.env.USER_MAIL,
-        to,
-        subject,
-        text,
-    };
     try {
+        // Read the email template file
+        const currentDir = path_1.default.resolve(__dirname);
+        const templatePath = path_1.default.join(currentDir, "template.html");
+        const html = (0, fs_1.readFileSync)(templatePath, "utf-8");
+        const data = {
+            email: to,
+            year: "2023",
+            company: "Alumni Platform",
+            content: text,
+        };
+        const rendered = yield mustache_1.default.render(html, data);
+        const mailOptions = {
+            from: "Alumni Platform <noreply@alumni-platform.com>",
+            to,
+            subject,
+            html: rendered,
+        };
         yield transporter.sendMail(mailOptions);
         res.status(200).send("Email sent successfully");
     }

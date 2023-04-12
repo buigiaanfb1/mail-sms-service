@@ -3,6 +3,9 @@ import bodyParser from "body-parser";
 import nodemailer from "nodemailer";
 import twilio from "twilio";
 import * as dotenv from "dotenv";
+import { readFileSync } from "fs";
+import mustache from "mustache";
+import path from "path";
 
 dotenv.config();
 
@@ -28,13 +31,26 @@ app.post(
         pass: process.env.USER_PASS,
       },
     });
-    const mailOptions = {
-      from: process.env.USER_MAIL,
-      to,
-      subject,
-      text,
-    };
     try {
+      // Read the email template file
+      const currentDir = path.resolve(__dirname);
+      const templatePath = path.join(currentDir, "template.html");
+      const html = readFileSync(templatePath, "utf-8");
+      const data = {
+        email: to,
+        year: "2023",
+        company: "Alumni Platform",
+        content: text,
+      };
+      const rendered = await mustache.render(html, data);
+
+      const mailOptions = {
+        from: "Alumni Platform <noreply@alumni-platform.com>",
+        to,
+        subject,
+        html: rendered,
+      };
+
       await transporter.sendMail(mailOptions);
       res.status(200).send("Email sent successfully");
     } catch (error) {
