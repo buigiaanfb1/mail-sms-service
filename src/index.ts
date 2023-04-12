@@ -3,10 +3,45 @@ import bodyParser from "body-parser";
 import nodemailer from "nodemailer";
 import twilio from "twilio";
 import * as dotenv from "dotenv";
-import { readFileSync } from "fs";
 import mustache from "mustache";
-import path from "path";
 
+const emailTemplate = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alumni Platform Email</title>
+</head>
+<body style="font-size: 16px; line-height: 1.5; background-color: #f6f6f6; display: flex">
+   <div style="width: 600px; margin: 2rem auto">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr style="background: linear-gradient(to right, #7635dc, #01AB55); border: 8px">
+            <td style="padding: 20px; color: #fff; text-align: center;">
+                <h1 style="margin: 0;">Alumni Platform</h1>
+                <p style="margin: 10px 0 0;">Nền tảng kết nối cựu học sinh THPT</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px; background-color: #fff; color: #000; font-size: 14px;">
+                <p style="color: #000">Chào bạn {{ email }},</p>
+                <div style="color: #000">
+                    <p style="font-size: 14px; color: #000">{{ content }}</p>
+                </div>
+                <br/>
+                <p style="margin: 0; color: #000">Xin cảm ơn bạn,</p>
+                <p style="margin: 0.25rem 0 0 0; font-size: 14px; color: #000">Alumni Team.</p>
+            </td>
+        </tr>
+        <tr style="background: #000; color: #fff">
+            <td style="padding: 5px; text-align: center; font-size: 12px">
+                <p>ALUMNI PLATFORM &copy; {{ year }}</p>
+            </td>
+        </tr>
+    </table>
+   </div>
+</body>
+</html>
+`;
 dotenv.config();
 
 const app = express();
@@ -33,16 +68,13 @@ app.post(
     });
     try {
       // Read the email template file
-      const currentDir = path.resolve(__dirname);
-      const templatePath = path.join(currentDir, "template.html");
-      const html = readFileSync(templatePath, "utf-8");
       const data = {
         email: to,
         year: "2023",
         company: "Alumni Platform",
         content: text,
       };
-      const rendered = await mustache.render(html, data);
+      const rendered = await mustache.render(emailTemplate, data);
 
       const mailOptions = {
         from: "Alumni Platform <noreply@alumni-platform.com>",
