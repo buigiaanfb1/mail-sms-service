@@ -12,6 +12,9 @@ const emailTemplate = (content: string): string => {
   <head>
       <meta charset="UTF-8">
       <title>Alumni Platform Email</title>
+      <style>
+        p { margin: 0; }
+      </style>
   </head>
   <body style="font-size: 16px; line-height: 1.5; background-color: #f6f6f6; display: flex">
      <div style="width: 600px; margin: 2rem auto">
