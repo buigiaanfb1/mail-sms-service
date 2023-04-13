@@ -35,7 +35,7 @@ const emailTemplate = (content: string): string => {
           </tr>
           <tr style="background: #000; color: #fff">
               <td style="padding: 5px; text-align: center; font-size: 12px">
-                  <p>ALUMNI PLATFORM &copy; {{ year }}</p>
+                  <p style="padding: 0.75rem 0;">ALUMNI PLATFORM &copy; {{ year }}</p>
               </td>
           </tr>
       </table>
