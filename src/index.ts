@@ -7,41 +7,41 @@ import mustache from "mustache";
 
 const emailTemplate = (content: string): string => {
   return `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <title>Alumni Platform Email</title>
-      <style>
-        p { margin: 0; }
-      </style>
-  </head>
-  <body style="font-size: 16px; line-height: 1.5; background-color: #f6f6f6; display: flex">
-     <div style="width: 600px; margin: 2rem auto">
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr style="background: linear-gradient(to right, #7635dc, #01AB55); border: 8px">
-              <td style="padding: 20px; color: #fff; text-align: center;">
-                  <h1 style="margin: 0;">Alumni Platform</h1>
-                  <p style="margin: 10px 0 0;">Nền tảng kết nối cựu học sinh THPT</p>
-              </td>
-          </tr>
-          <tr>
-              <td style="padding: 20px; background-color: #fff; color: #000; font-size: 14px;">
-                  ${content}
-                  <br/>
-                  <p style="margin: 0; color: #000">Xin cảm ơn bạn,</p>
-                  <p style="margin: 0.25rem 0 0 0; font-size: 14px; color: #000">Alumni Team.</p>
-              </td>
-          </tr>
-          <tr style="background: #000; color: #fff">
-              <td style="padding: 5px; text-align: center; font-size: 12px">
-                  <p style="padding: 0.75rem 0;">ALUMNI PLATFORM &copy; {{ year }}</p>
-              </td>
-          </tr>
-      </table>
-     </div>
-  </body>
-  </html>
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>Alumni Platform Email</title>
+                <style>
+                  p { margin: 0; }
+                </style>
+            </head>
+            <body style="font-size: 16px; line-height: 1.5; background-color: #f6f6f6; display: flex">
+              <div style="width: 600px; margin: 2rem auto">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr style="background: linear-gradient(to right, #7635dc, #01AB55); border: 8px">
+                        <td style="padding: 20px; color: #fff; text-align: center;">
+                            <h1 style="margin: 0;">Alumni Platform</h1>
+                            <p style="margin: 10px 0 0;">Nền tảng kết nối cựu học sinh THPT</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 20px; background-color: #fff; color: #000; font-size: 14px;">
+                            ${content}
+                            <br/>
+                            <p style="margin: 0; color: #000">Xin cảm ơn bạn,</p>
+                            <p style="margin: 0.25rem 0 0 0; font-size: 14px; color: #000">Alumni Team.</p>
+                        </td>
+                    </tr>
+                    <tr style="background: #000; color: #fff">
+                        <td style="padding: 5px; text-align: center; font-size: 12px">
+                            <p style="padding: 0.75rem 0;">ALUMNI PLATFORM &copy; {{ year }}</p>
+                        </td>
+                    </tr>
+                </table>
+              </div>
+            </body>
+          </html>
   `;
 };
 dotenv.config();
@@ -79,7 +79,7 @@ app.post(
       const rendered = await mustache.render(emailTemplate(data.content), data);
 
       const mailOptions = {
-        from: "Alumni Platform <noreply@alumni-platform.com>",
+        from: "Alumni Platform",
         to,
         subject,
         html: rendered,
