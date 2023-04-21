@@ -41,7 +41,7 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const twilio_1 = __importDefault(require("twilio"));
 const dotenv = __importStar(require("dotenv"));
 const mustache_1 = __importDefault(require("mustache"));
-const emailTemplate = (content) => {
+const emailTemplate = (content, footerName) => {
     return `
           <!DOCTYPE html>
           <html lang="en">
@@ -66,7 +66,7 @@ const emailTemplate = (content) => {
                             ${content}
                             <br/>
                             <p style="margin: 0; color: #000">Xin cảm ơn bạn,</p>
-                            <p style="margin: 0.25rem 0 0 0; font-size: 14px; color: #000">Alumni Team.</p>
+                            <p style="margin: 0.25rem 0 0 0; font-size: 14px; color: #000">${footerName ? footerName : "Alumni Team"}</p>
                         </td>
                     </tr>
                     <tr style="background: #000; color: #fff">
@@ -88,7 +88,7 @@ const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN;
 const client = (0, twilio_1.default)(accountSid, authToken);
 app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { to, subject, text } = req.body;
+    const { to, subject, text, footerName = null } = req.body;
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.gmail.com",
         port: 465,
@@ -107,7 +107,7 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
             company: "Alumni Platform",
             content: text,
         };
-        const rendered = yield mustache_1.default.render(emailTemplate(data.content), data);
+        const rendered = yield mustache_1.default.render(emailTemplate(data.content, footerName), data);
         const mailOptions = {
             from: "Alumni Platform",
             to,

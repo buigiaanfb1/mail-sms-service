@@ -5,7 +5,7 @@ import twilio from "twilio";
 import * as dotenv from "dotenv";
 import mustache from "mustache";
 
-const emailTemplate = (content: string): string => {
+const emailTemplate = (content: string, footerName?: string): string => {
   return `
           <!DOCTYPE html>
           <html lang="en">
@@ -30,7 +30,9 @@ const emailTemplate = (content: string): string => {
                             ${content}
                             <br/>
                             <p style="margin: 0; color: #000">Xin cảm ơn bạn,</p>
-                            <p style="margin: 0.25rem 0 0 0; font-size: 14px; color: #000">Alumni Team.</p>
+                            <p style="margin: 0.25rem 0 0 0; font-size: 14px; color: #000">${
+                              footerName ? footerName : "Alumni Team"
+                            }</p>
                         </td>
                     </tr>
                     <tr style="background: #000; color: #fff">
@@ -57,7 +59,7 @@ const client = twilio(accountSid, authToken);
 app.post(
   "/mail/send-email",
   async (req: express.Request, res: express.Response) => {
-    const { to, subject, text } = req.body;
+    const { to, subject, text, footerName = null } = req.body;
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
@@ -76,7 +78,10 @@ app.post(
         company: "Alumni Platform",
         content: text,
       };
-      const rendered = await mustache.render(emailTemplate(data.content), data);
+      const rendered = await mustache.render(
+        emailTemplate(data.content, footerName),
+        data
+      );
 
       const mailOptions = {
         from: "Alumni Platform",
