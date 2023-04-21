@@ -20,10 +20,10 @@
 
 ```html
 { "to": "anbui.dev@gmail.com", "subject": "Test email", "text": "This is a test
-email" }
+email", "footerName?": "Gia An" }
 ```
 
-**_/sms/send-sms**
+**_/sms/send-sms_**
 
 ```html
 { "to": "+840948451791", "body": "Test email"}
