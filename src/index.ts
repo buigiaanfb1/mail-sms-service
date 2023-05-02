@@ -4,6 +4,7 @@ import nodemailer from "nodemailer";
 import twilio from "twilio";
 import * as dotenv from "dotenv";
 import mustache from "mustache";
+import wait from "wait";
 
 const emailTemplate = (content: string, footerName?: string): string => {
   return `
@@ -114,6 +115,19 @@ app.post(
       .catch((error) => {
         res.status(500).send(error);
       });
+  }
+);
+
+app.get(
+  "/performance/wait-30",
+  async (req: express.Request, res: express.Response) => {
+    try {
+      // Read the email template file
+      await wait(30000);
+      res.status(200).send(`Waited for 30s`);
+    } catch (error) {
+      res.status(500).send(error);
+    }
   }
 );
 

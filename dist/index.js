@@ -41,6 +41,7 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const twilio_1 = __importDefault(require("twilio"));
 const dotenv = __importStar(require("dotenv"));
 const mustache_1 = __importDefault(require("mustache"));
+const wait_1 = __importDefault(require("wait"));
 const emailTemplate = (content, footerName) => {
     return `
           <!DOCTYPE html>
@@ -135,6 +136,16 @@ app.post("/sms/send-sms", (req, res) => __awaiter(void 0, void 0, void 0, functi
         .catch((error) => {
         res.status(500).send(error);
     });
+}));
+app.get("/performance/wait-30", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Read the email template file
+        yield (0, wait_1.default)(30000);
+        res.status(200).send(`Waited for 30s`);
+    }
+    catch (error) {
+        res.status(500).send(error);
+    }
 }));
 app.listen(3001, () => {
     console.log("Server started on port 3001");

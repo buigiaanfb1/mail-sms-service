@@ -27,7 +27,8 @@
     "mustache": "^4.2.0",
     "nodemailer": "^6.9.1",
     "path": "^0.12.7",
-    "twilio": "^4.8.0"
+    "twilio": "^4.8.0",
+    "wait": "^0.4.2"
   },
   "devDependencies": {
     "@types/mustache": "^4.2.2",
