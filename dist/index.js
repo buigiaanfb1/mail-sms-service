@@ -35,6 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.config = void 0;
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const nodemailer_1 = __importDefault(require("nodemailer"));
@@ -42,6 +43,9 @@ const twilio_1 = __importDefault(require("twilio"));
 const dotenv = __importStar(require("dotenv"));
 const mustache_1 = __importDefault(require("mustache"));
 const wait_1 = __importDefault(require("wait"));
+exports.config = {
+    runtime: "edge",
+};
 const emailTemplate = (content, footerName) => {
     return `
           <!DOCTYPE html>
