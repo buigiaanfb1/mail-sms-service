@@ -6,10 +6,6 @@ import * as dotenv from "dotenv";
 import mustache from "mustache";
 import wait from "wait";
 
-export const config = {
-  runtime: "edge",
-};
-
 const emailTemplate = (content: string, footerName?: string): string => {
   return `
           <!DOCTYPE html>
