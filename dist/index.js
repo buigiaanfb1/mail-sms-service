@@ -128,7 +128,6 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
     for (let i = 0; i < 3; i++) {
         try {
             info = yield promiseWrapper();
-            break;
         }
         catch (e) {
             error = e;
