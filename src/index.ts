@@ -60,6 +60,8 @@ const client = twilio(accountSid, authToken);
 app.post(
   "/mail/send-email",
   async (req: express.Request, res: express.Response) => {
+    let info: any;
+    let error: any;
     const { to, subject, text, footerName = null } = req.body;
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -71,31 +73,51 @@ app.post(
         pass: process.env.USER_PASS,
       },
     });
-    try {
-      // Read the email template file
-      const data = {
-        email: to,
-        year: "2023",
-        company: "Alumni Platform",
-        content: text,
-      };
-      const rendered = await mustache.render(
-        emailTemplate(data.content, footerName),
-        data
-      );
+    // Read the email template file
+    const data = {
+      email: to,
+      year: "2023",
+      company: "Alumni Platform",
+      content: text,
+    };
+    const rendered = await mustache.render(
+      emailTemplate(data.content, footerName),
+      data
+    );
 
-      const mailOptions = {
-        from: "Alumni Platform",
-        to,
-        subject,
-        html: rendered,
-      };
+    const mailOptions = {
+      from: "Alumni Platform",
+      to,
+      subject,
+      html: rendered,
+    };
 
-      await transporter.sendMail(mailOptions);
-      res.status(200).send("Email sent successfully");
-    } catch (error) {
-      res.status(500).send(error);
+    const promiseWrapper = () =>
+      new Promise((resolve, reject) => {
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            reject(error);
+            return;
+          }
+          resolve(info);
+        });
+      });
+
+    for (let i = 0; i < 3; i++) {
+      try {
+        info = await promiseWrapper();
+        break;
+      } catch (e) {
+        error = e;
+      }
     }
+
+    info
+      ? res.status(200).json({ message: "Mail Sent", response: info?.response })
+      : res.status(500).json({ message: "Mail not send", error });
+
+    // await transporter.sendMail(mailOptions);
+    // res.status(200).send("Email sent successfully");
   }
 );
 

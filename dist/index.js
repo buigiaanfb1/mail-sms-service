@@ -89,6 +89,8 @@ const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN;
 const client = (0, twilio_1.default)(accountSid, authToken);
 app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let info;
+    let error;
     const { to, subject, text, footerName = null } = req.body;
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.gmail.com",
@@ -100,27 +102,43 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
             pass: process.env.USER_PASS,
         },
     });
-    try {
-        // Read the email template file
-        const data = {
-            email: to,
-            year: "2023",
-            company: "Alumni Platform",
-            content: text,
-        };
-        const rendered = yield mustache_1.default.render(emailTemplate(data.content, footerName), data);
-        const mailOptions = {
-            from: "Alumni Platform",
-            to,
-            subject,
-            html: rendered,
-        };
-        yield transporter.sendMail(mailOptions);
-        res.status(200).send("Email sent successfully");
+    // Read the email template file
+    const data = {
+        email: to,
+        year: "2023",
+        company: "Alumni Platform",
+        content: text,
+    };
+    const rendered = yield mustache_1.default.render(emailTemplate(data.content, footerName), data);
+    const mailOptions = {
+        from: "Alumni Platform",
+        to,
+        subject,
+        html: rendered,
+    };
+    const promiseWrapper = () => new Promise((resolve, reject) => {
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve(info);
+        });
+    });
+    for (let i = 0; i < 3; i++) {
+        try {
+            info = yield promiseWrapper();
+            break;
+        }
+        catch (e) {
+            error = e;
+        }
     }
-    catch (error) {
-        res.status(500).send(error);
-    }
+    info
+        ? res.status(200).json({ message: "Mail Sent", response: info === null || info === void 0 ? void 0 : info.response })
+        : res.status(500).json({ message: "Mail not send", error });
+    // await transporter.sendMail(mailOptions);
+    // res.status(200).send("Email sent successfully");
 }));
 app.post("/sms/send-sms", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { to, body } = req.body;
