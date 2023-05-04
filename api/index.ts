@@ -96,6 +96,7 @@ app.post(
       new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
+            console.log(error);
             reject(error);
             return;
           }

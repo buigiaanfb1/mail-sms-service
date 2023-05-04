@@ -119,6 +119,7 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
     const promiseWrapper = () => new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
+                console.log(error);
                 reject(error);
                 return;
             }
