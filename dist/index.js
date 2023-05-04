@@ -167,4 +167,5 @@ app.get("/performance/wait-30", (req, res) => __awaiter(void 0, void 0, void 0, 
 app.listen(3001, () => {
     console.log("Server started on port 3001");
 });
+module.exports = app;
 //# sourceMappingURL=index.js.map
