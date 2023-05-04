@@ -41,7 +41,6 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const twilio_1 = __importDefault(require("twilio"));
 const dotenv = __importStar(require("dotenv"));
 const mustache_1 = __importDefault(require("mustache"));
-const wait_1 = __importDefault(require("wait"));
 const emailTemplate = (content, footerName) => {
     return `
           <!DOCTYPE html>
@@ -139,15 +138,28 @@ app.post("/sms/send-sms", (req, res) => __awaiter(void 0, void 0, void 0, functi
 }));
 app.get("/performance/wait-30", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // Read the email template file
-        yield (0, wait_1.default)(30000);
-        res.status(200).send(`Waited for 30s`);
+        const url = "https://mail-sms-services.vercel.app/mail/send-email"; // replace with your API endpoint
+        for (let i = 0; i < 10; i++) {
+            yield fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify({
+                    to: "anbui.dev@gmail.com",
+                    subject: "stress test",
+                    text: "stress testhhhh",
+                }),
+            }); // make a request to the API endpoint
+        }
+        res.status(200).send("Email sent successfully"); // log the response data to the console
     }
     catch (error) {
-        res.status(500).send(error);
+        console.error(error); // log any errors to the console
     }
 }));
-app.listen(3001, () => {
-    console.log("Server started on port 3001");
+app.listen(process.env.PORT || 3001, function () {
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
 //# sourceMappingURL=index.js.map
