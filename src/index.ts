@@ -122,33 +122,15 @@ app.get(
   "/performance/wait-30",
   async (req: express.Request, res: express.Response) => {
     try {
-      const url = "https://mail-sms-services.vercel.app/mail/send-email"; // replace with your API endpoint
-      for (let i = 0; i < 10; i++) {
-        await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: JSON.stringify({
-            to: "anbui.dev@gmail.com",
-            subject: "stress test",
-            text: "stress testhhhh",
-          }),
-        }); // make a request to the API endpoint
-      }
-
-      res.status(200).send("Email sent successfully"); // log the response data to the console
+      // Read the email template file
+      await wait(30000);
+      res.status(200).send(`Waited for 30s`);
     } catch (error) {
-      console.error(error); // log any errors to the console
+      res.status(500).send(error);
     }
   }
 );
 
-app.listen(process.env.PORT || 3001, function () {
-  console.log(
-    "Express server listening on port %d in %s mode",
-    this.address().port,
-    app.settings.env
-  );
+app.listen(3001, () => {
+  console.log("Server started on port 3001");
 });
