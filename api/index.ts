@@ -65,8 +65,7 @@ app.post(
     const { to, subject, text, footerName = null } = req.body;
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      port: 587,
       pool: true,
       service: "Gmail",
       auth: {

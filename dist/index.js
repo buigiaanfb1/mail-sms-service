@@ -94,8 +94,7 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
     const { to, subject, text, footerName = null } = req.body;
     const transporter = nodemailer_1.default.createTransport({
         host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
+        port: 587,
         pool: true,
         service: "Gmail",
         auth: {
