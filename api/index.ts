@@ -65,8 +65,8 @@ app.post(
     const { to, subject, text, footerName = null } = req.body;
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587,
-      pool: true,
+      port: 465,
+      secure: true,
       service: "Gmail",
       auth: {
         user: process.env.USER_MAIL,
@@ -112,8 +112,6 @@ app.post(
         error = e;
       }
     }
-
-    transporter.close();
 
     info
       ? res.status(200).json({ message: "Mail Sent", response: info?.response })
