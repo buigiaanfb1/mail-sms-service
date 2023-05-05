@@ -96,6 +96,7 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
         host: "smtp.gmail.com",
         port: 465,
         secure: true,
+        pool: true,
         service: "Gmail",
         auth: {
             user: process.env.USER_MAIL,
@@ -134,11 +135,10 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
             error = e;
         }
     }
+    transporter.close();
     info
         ? res.status(200).json({ message: "Mail Sent", response: info === null || info === void 0 ? void 0 : info.response })
         : res.status(500).json({ message: "Mail not send", error });
-    // await transporter.sendMail(mailOptions);
-    // res.status(200).send("Email sent successfully");
 }));
 app.post("/sms/send-sms", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { to, body } = req.body;

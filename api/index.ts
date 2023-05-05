@@ -67,6 +67,7 @@ app.post(
       host: "smtp.gmail.com",
       port: 465,
       secure: true,
+      pool: true,
       service: "Gmail",
       auth: {
         user: process.env.USER_MAIL,
@@ -112,12 +113,11 @@ app.post(
       }
     }
 
+    transporter.close();
+
     info
       ? res.status(200).json({ message: "Mail Sent", response: info?.response })
       : res.status(500).json({ message: "Mail not send", error });
-
-    // await transporter.sendMail(mailOptions);
-    // res.status(200).send("Email sent successfully");
   }
 );
 
