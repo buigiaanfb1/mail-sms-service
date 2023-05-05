@@ -107,6 +107,7 @@ app.post(
     for (let i = 0; i < 3; i++) {
       try {
         info = await promiseWrapper();
+        break;
       } catch (e) {
         error = e;
       }
