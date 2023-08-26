@@ -56,12 +56,6 @@ const emailTemplate = (content, footerName) => {
             <body style="font-size: 16px; line-height: 1.5; background-color: #f6f6f6; display: flex">
               <div style="width: 600px; margin: 2rem auto">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr style="background: linear-gradient(to right, #7635dc, #01AB55); border: 8px">
-                        <td style="padding: 20px; color: #fff; text-align: center;">
-                            <h1 style="margin: 0;">Student Volunteer Connection</h1>
-                            <p style="margin: 10px 0 0;">Nền tảng kết nối sinh viên với các hoạt động tình nguyện</p>
-                        </td>
-                    </tr>
                     <tr>
                         <td style="padding: 20px; background-color: #fff; color: #000; font-size: 14px;">
                             ${content}
