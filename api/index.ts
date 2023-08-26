@@ -29,16 +29,11 @@ const emailTemplate = (content: string, footerName?: string): string => {
                     <tr>
                         <td style="padding: 20px; background-color: #fff; color: #000; font-size: 14px;">
                             ${content}
-                            <br/>
-                            <p style="margin: 0; color: #000">Xin cảm ơn bạn,</p>
-                            <p style="margin: 0.25rem 0 0 0; font-size: 14px; color: #000">${
-                              footerName ? footerName : "Alumni Team"
-                            }</p>
                         </td>
                     </tr>
                     <tr style="background: #000; color: #fff">
                         <td style="padding: 5px; text-align: center; font-size: 12px">
-                            <p style="padding: 0.75rem 0;">ALUMNI PLATFORM &copy; {{ year }}</p>
+                            <p style="padding: 0.75rem 0;">SVCW &copy; {{ year }}</p>
                         </td>
                     </tr>
                 </table>
