@@ -22,8 +22,8 @@ const emailTemplate = (content: string, footerName?: string): string => {
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr style="background: linear-gradient(to right, #7635dc, #01AB55); border: 8px">
                         <td style="padding: 20px; color: #fff; text-align: center;">
-                            <h1 style="margin: 0;">Alumni Platform</h1>
-                            <p style="margin: 10px 0 0;">Nền tảng kết nối cựu học sinh THPT</p>
+                            <h1 style="margin: 0;">Student Volunteer Connection</h1>
+                            <p style="margin: 10px 0 0;">Nền tảng kết nối sinh viên với các hoạt động tình nguyện</p>
                         </td>
                     </tr>
                     <tr>
