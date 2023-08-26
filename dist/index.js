@@ -48,7 +48,7 @@ const emailTemplate = (content, footerName) => {
           <html lang="en">
             <head>
                 <meta charset="UTF-8">
-                <title>Alumni Platform Email</title>
+                <title>SVCW Email</title>
                 <style>
                   p { margin: 0; }
                 </style>
@@ -97,12 +97,12 @@ app.post("/mail/send-email", (req, res) => __awaiter(void 0, void 0, void 0, fun
     const data = {
         email: to,
         year: "2023",
-        company: "Alumni Platform",
+        company: "SVCW Platform",
         content: text,
     };
     const rendered = yield mustache_1.default.render(emailTemplate(data.content, footerName), data);
     const mailOptions = {
-        from: "Alumni Platform",
+        from: "SVCW Platform",
         to,
         subject,
         html: rendered,
