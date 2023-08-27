@@ -5,6 +5,7 @@ import twilio from "twilio";
 import * as dotenv from "dotenv";
 import mustache from "mustache";
 import wait from "wait";
+import cors from "cors";
 
 const emailTemplate = (content: string, footerName?: string): string => {
   return `
@@ -39,6 +40,7 @@ const emailTemplate = (content: string, footerName?: string): string => {
 dotenv.config();
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

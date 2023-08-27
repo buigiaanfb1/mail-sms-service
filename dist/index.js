@@ -42,6 +42,7 @@ const twilio_1 = __importDefault(require("twilio"));
 const dotenv = __importStar(require("dotenv"));
 const mustache_1 = __importDefault(require("mustache"));
 const wait_1 = __importDefault(require("wait"));
+const cors_1 = __importDefault(require("cors"));
 const emailTemplate = (content, footerName) => {
     return `
           <!DOCTYPE html>
@@ -74,6 +75,7 @@ const emailTemplate = (content, footerName) => {
 };
 dotenv.config();
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(body_parser_1.default.json());
 const accountSid = process.env.ACCOUNT_SID;
